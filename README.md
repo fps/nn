@@ -45,4 +45,4 @@ delta w = r * -dL/dw = sum_i e_i * x_i [8]
 
 for batch updates. Now we're ready to cast our toy model into octave code. See
 
-[model.m](blob/nn0/model.m)
+[model.m](blob/master/nn0/model.m)
