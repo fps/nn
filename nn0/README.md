@@ -1,6 +1,3 @@
-# nn
-Introduction to learning with neural networks implemented in octave/matlab starting from the basic basics.
-
 # nn0
 
 Given a "neural net" which is just a single linear neuron (even without bias terms in the summation):
