@@ -46,6 +46,10 @@ for batch updates. Now we're ready to cast our toy model into octave code. See
 
 [nn0/generate.m](nn0/generate.m) - generating some random samples with noise
 
-[nn0/optimize.m](nn0/optimize.m) - optimizing in a super unoptimized way
+[nn0/optimize_lame.m](nn0/optimize-lame.m) - optimizing in a super unoptimized way
+
+[nn0/test_lame.m](nn0/test_lame.m) - a little test program with animated plots :)
+
+[nn0/optimize.m](nn0/optimize.m) - optimizing in a slightly less super unoptimized way
 
 [nn0/test.m](nn0/test.m) - a little test program with animated plots :)
