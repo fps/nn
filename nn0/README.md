@@ -42,14 +42,14 @@ delta w = r * -dL/dw = sum_i e_i * x_i [8]
 
 for batch updates. Now we're ready to cast our toy model into octave code. See
 
-[nn0/model.m](nn0/model.m) - our very simple model f(w,x) = w  x
+[model.m](model.m) - our very simple model f(w,x) = w  x
 
-[nn0/generate.m](nn0/generate.m) - generating some random samples with noise
+[generate.m](generate.m) - generating some random samples with noise
 
-[nn0/optimize_lame.m](nn0/optimize_lame.m) - optimizing in a super unoptimized way
+[optimize_lame.m](optimize_lame.m) - optimizing in a super unoptimized way
 
-[nn0/test_lame.m](nn0/test_lame.m) - a little test program with animated plots :)
+[test_lame.m](test_lame.m) - a little test program with animated plots :)
 
-[nn0/optimize.m](nn0/optimize.m) - optimizing in a slightly less super unoptimized way
+[optimize.m](optimize.m) - optimizing in a slightly less super unoptimized way
 
-[nn0/test.m](nn0/test.m) - a little test program with animated plots :)
+[test.m](test.m) - a little test program with animated plots :)
