@@ -1,4 +1,5 @@
 function test()
+    more off
     [X, Y] = generate()
 
     w = 0
