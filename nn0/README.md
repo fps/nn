@@ -4,9 +4,9 @@ Given a "neural net" which is just a single linear neuron (even without bias ter
 
  [1] <code>f(w, x) = y = w x</code>,
 
-x \in |R, w \in |R, so f:|R -> |R and given a sequence of training samples, X = x_1, ..., x_n, Y = y_1, ..., y_n, we can define the loss function 
+<code>x \in |R, w \in |R</code>, so <code>f:|R -> |R</code> and given a sequence of training samples, <code>X = x_1, ..., x_n, Y = y_1, ..., y_n</code>, we can define the loss function 
 
-L(w, X, Y) = 1/2 sum_i |y_i - f(w, x_i)|^2 [2].
+[2] <code>L(w, X, Y) = 1/2 sum_i |y_i - f(w, x_i)|^2</code>.
 
 Note that this is a sum, so we can also define "individual" loss functions per sample:
 
