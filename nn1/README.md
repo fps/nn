@@ -18,7 +18,7 @@ More explicitly written (using [3]) the loss function [2] looks like
 
 To find the gradient of the loss function we differentiate L_i with respect to w:
 
-[4] <code>dL / dw = -sum_i sum_j(y_ij - f(w, x_i)_j) * x_i</code>
+[5] <code>dL / dw = -sum_i sum_j(y_ij - f(w, x_i)_j) * x_i</code>
 
 Now we can present our updated example code for a 2-dim in, 2-dim out nn:
 
