@@ -2,7 +2,7 @@
 
 We extend the simple neural net from nn0 to have n-dimensional inputs and m-dimensional outputs (in nn-lingo: 2 output neurons). We stick to the linear model:
 
-[1] <code>f(w, x) = y = w x, x \in |R^n, w \in |R^m, f:|R^2 -> |R^2</code>,
+[1] <code>f(w, x) = y = w x, x \in |R^n, w \in |R^m, f:|R^m -> |R^n</code>,
 
 Our loss function looks still the same on the surface. The only thing that changed is that <code>|  |^2</code> now stands for the squared norm of the vector difference.
 
