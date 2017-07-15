@@ -2,7 +2,7 @@
 
 Given a "neural net" which is just a single linear neuron (even without bias terms in the summation):
 
-f(w, x) = y = w x [1],
+ [1] <pre>f(w, x) = y = w x<pre>,
 
 x \in |R, w \in |R, so f:|R -> |R and given a sequence of training samples, X = x_1, ..., x_n, Y = y_1, ..., y_n, we can define the loss function 
 
