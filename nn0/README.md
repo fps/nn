@@ -2,47 +2,57 @@
 
 Given a "neural net" which is just a single linear neuron (even without bias terms in the summation):
 
-f(w, x) = y = w x [1],
+ [1] <code>f(w, x) = y = w x, x \in |R, w \in |R, f:|R -> |R</code>,
 
-x \in |R, w \in |R, so f:|R -> |R and given a sequence of training samples, X = x_1, ..., x_n, Y = y_1, ..., y_n, we can define the loss function 
+and given a sequence of training samples, 
 
-L(w, X, Y) = 1/2 sum_i |y_i - f(w, x_i)|^2 [2].
+<code>X = x_1, ..., x_n, Y = y_1, ..., y_n</code>, 
+
+we can define the loss function 
+
+[2] <code>L(w, X, Y) = 1/2 sum_i |y_i - f(w, x_i)|^2</code>.
 
 Note that this is a sum, so we can also define "individual" loss functions per sample:
 
-L_i(w, x_i, y_i) = 1/2 |y_i - f(w, x_i)|^2 [3].
+[3] <code>L_i(w, x_i, y_i) = 1/2 |y_i - f(w, x_i)|^2</code>.
 
 To find the gradient of the loss function we differentiate L_i with respect to w:
 
-dL_i / dw = -1 * (y_i - f(w, x_i)) * x_i [4]
+[4] <code>dL_i / dw = -1 * (y_i - f(w, x_i)) * x_i</code>]
 
-(chain rule: dg(h(x)) / dx = (dg / dh) * (dh / dx), in this case g = y^2, and h = y_i - f(w, x_i)) = y_i - w * x_i.
+using the chain rule: 
+
+<code>dg(h(x)) / dx = (dg / dh) * (dh / dx)</code>, 
+
+in this case 
+
+<code>g = y^2</code>, and <code>h = y_i - f(w, x_i)) = y_i - w * x_i</code>.
 
 Since the derivative of a sum of functions is the sum of the derivatives we can immediately also write the "batch" gradient:
 
-dL / dw = sum_i -1 * (y_i - f(w, x_i)) * x_i [5].
+[5] <code>dL / dw = sum_i -1 * (y_i - f(w, x_i)) * x_i</code>.
 
 The term 
 
-e_i(w) = y_i - f(w, x_i) = y_i - w * x_i [6]
+[6] <code>e_i(w) = y_i - f(w, x_i) = y_i - w * x_i</code>
 
-we call the error-term which depends on the current w which is the per-sample-error. So we can rewrite dL/dw and dL_i/dw for brevity as
+we call the error-term (which depends on the current w) which is the per-sample-error. So we can rewrite <code>dL/dw</code> and <code>dL_i/dw</code> for brevity as
 
-dL_i/dw = -e_i * x_i,
+<code>dL_i/dw = -e_i * x_i</code>,
 
-dL/dw = sum_i -e_i * x_i.
+<code>dL/dw = sum_i -e_i * x_i</code>.
 
 Now we choose a learning rate r << 1 and update the weights in the direction of greatest _descent_,
 
-delta w = r * -dL_i/dw = e_i * x_i [7]
+[7] <code>delta w = r * -dL_i/dw = e_i * x_i</code>
 
 for single sample updates or 
 
-delta w = r * -dL/dw = sum_i e_i * x_i [8] 
+[8] <code>delta w = r * -dL/dw = sum_i e_i * x_i</code>
 
 for batch updates. Now we're ready to cast our toy model into octave code. See
 
-[model.m](model.m) - our very simple model f(w,x) = w  x
+[model.m](model.m) - our very simple model <code>f(w,x) = w  x</code>
 
 [generate.m](generate.m) - generating some random samples with noise
 
