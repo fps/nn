@@ -8,7 +8,7 @@ Our loss function looks still the same on the surface. The only thing that chang
 
 [2] <code>L(w, X, Y) = 1/2 sum_i |y_i - f(w, x_i)|^2</code>.
 
-We now write <code>v_ij<code> for the j-th component of the i-th vector. The squared norm of a vector <code>v_i</code> is given by
+We now write <code>v_ij</code> for the j-th component of the i-th vector. The squared norm of a vector <code>v_i</code> is given by
 
 [3] <code>| v_i |^2 = sum_j v_i^2</code>.
 
