@@ -1,64 +1,30 @@
-# nn0
+# nn1
 
-Given a "neural net" which is just a single linear neuron (even without bias terms in the summation):
+We extend the simple neural net from nn0 to have 2-dimensional inputs and two-dimensional outputs (in nn-lingo: 2 output neurons). We stick to the linear model:
 
- [1] <code>f(w, x) = y = w x, x \in |R, w \in |R, f:|R -> |R</code>,
+[1] <code>f(w, x) = y = w x, x \in |R^2, w \in |R^2, f:|R^2 -> |R^2</code>,
 
-and given a sequence of training samples, 
-
-<code>X = x_1, ..., x_n, Y = y_1, ..., y_n</code>, 
-
-we can define the loss function 
+Our loss function looks still the same on the surface. The only thing that changed is that <code>|  |^2</code> now stands for the squared norm of the vector difference.
 
 [2] <code>L(w, X, Y) = 1/2 sum_i |y_i - f(w, x_i)|^2</code>.
 
-Note that this is a sum, so we can also define "individual" loss functions per sample:
+We now write <code>v_ij<code> for the j-th component of the i-th vector. The squared norm of a vector <code>v_i</code> is given by
 
-[3] <code>L_i(w, x_i, y_i) = 1/2 |y_i - f(w, x_i)|^2</code>.
+[3] <code>| v_i |^2 = sum_j v_i^2</code>.
+
+More explicitly written (using [3]) the loss function [2] looks like
+
+[4] <code>L(w, X, Y) = 1/2 sum_i sum_j(y_ij - f(w, x_i)_j)^2</code>.
 
 To find the gradient of the loss function we differentiate L_i with respect to w:
 
-[4] <code>dL_i / dw = -1 * (y_i - f(w, x_i)) * x_i</code>]
+[4] <code>dL / dw = -sum_i sum_j(y_ij - f(w, x_i)_j) * x_i</code>
 
-using the chain rule: 
+Now we can present our updated example code for a 2-dim in, 2-dim out nn:
 
-<code>dg(h(x)) / dx = (dg / dh) * (dh / dx)</code>, 
+[model.m](model.m) 
 
-in this case 
-
-<code>g = y^2</code>, and <code>h = y_i - f(w, x_i)) = y_i - w * x_i</code>.
-
-Since the derivative of a sum of functions is the sum of the derivatives we can immediately also write the "batch" gradient:
-
-[5] <code>dL / dw = sum_i -1 * (y_i - f(w, x_i)) * x_i</code>.
-
-The term 
-
-[6] <code>e_i(w) = y_i - f(w, x_i) = y_i - w * x_i</code>
-
-we call the error-term (which depends on the current w) which is the per-sample-error. So we can rewrite <code>dL/dw</code> and <code>dL_i/dw</code> for brevity as
-
-<code>dL_i/dw = -e_i * x_i</code>,
-
-<code>dL/dw = sum_i -e_i * x_i</code>.
-
-Now we choose a learning rate r << 1 and update the weights in the direction of greatest _descent_,
-
-[7] <code>delta w = r * -dL_i/dw = e_i * x_i</code>
-
-for single sample updates or 
-
-[8] <code>delta w = r * -dL/dw = sum_i e_i * x_i</code>
-
-for batch updates. Now we're ready to cast our toy model into octave code. See
-
-[model.m](model.m) - our very simple model <code>f(w,x) = w  x</code>
-
-[generate.m](generate.m) - generating some random samples with noise
-
-[optimize_lame.m](optimize_lame.m) - optimizing in a super unoptimized way
-
-[test_lame.m](test_lame.m) - a little test program with animated plots :)
+[generate.m](generate.m) 
 
 [optimize.m](optimize.m) - optimizing in a slightly less super unoptimized way
 
