@@ -1,6 +1,6 @@
 # nn1
 
-We extend the simple neural net from nn0 to have n-dimensional inputs and m-dimensional outputs (in nn-lingo: 2 output neurons). We stick to the linear model:
+We extend the simple neural net from nn0 to have n-dimensional inputs and m-dimensional outputs (in nn-lingo: m output neurons). We stick to the linear model:
 
 [1] <code>f(w, x) = y = w x, x \in |R^n, w \in |R^m, f:|R^m -> |R^n</code>,
 
@@ -18,7 +18,7 @@ More explicitly written (using [3]) the loss function [2] looks like
 
 To find the gradient of the loss function we differentiate L_i with respect to w:
 
-[5] <code>dL / dw = -sum_i sum_j(y_ij - f(w, x_i)_j) * x_i</code>
+[5] <code>dL / dw_j = -sum_i (y_ij - (w_j * x_i)) * x_i</code>
 
 Now we can present our updated example code for a 2-dim in, 2-dim out nn:
 
@@ -26,6 +26,6 @@ Now we can present our updated example code for a 2-dim in, 2-dim out nn:
 
 [generate.m](generate.m) 
 
-[optimize.m](optimize.m) - optimizing in a slightly less super unoptimized way
+[optimize.m](optimize.m)
 
-[test.m](test.m) - a little test program with animated plots :)
+[test.m](test.m)
