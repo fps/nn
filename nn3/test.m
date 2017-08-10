@@ -10,11 +10,11 @@ function nn = test()
     % create the neural net
     nn = nn_new();
 
-    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 2));
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 10, 2));
 
-    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 25, 20));
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 10, 10));
 
-    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 25, 25));
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 10, 10));
 
     %nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
 
@@ -24,7 +24,7 @@ function nn = test()
 
     %nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 7, 8));
 
-    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, 25));
+    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, 10));
 
     nn = nn_initialize_weights_gaussian(nn);
 
@@ -36,7 +36,7 @@ function nn = test()
     % training
     number_of_epochs = 500;
     
-    nn = nn_initialize_backward_weights_gaussian(nn);
+    nn = nn_initialize_backward_weights_normal(nn);
     
     for epoch = 1:number_of_epochs
         epoch
@@ -58,7 +58,7 @@ function nn = test()
         
         % update weights 
         'backwards pass'
-        nn = nn_backward_pass(nn, y(:,p), 0.05);
+        nn = nn_backward_pass(nn, y(:,p), 0.1);
         nn_assert_consistency(nn);        
     end
 end
