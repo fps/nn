@@ -34,15 +34,7 @@ function nn_out = nn_backward_pass(nn, targets, rate)
                 
                 % size(current_errors)
                 
-                % weight_times_derivative = current_backward_weights .* previous_activations_derivative';
-                
-                % size(weight_times_derivative)
-                
-                % nn_out{layer-1}.errors(:, target) = weight_times_derivative * current_errors;
-                
                 nn_out{layer-1}.errors(:, target) = (current_backward_weights * current_errors) .* previous_activations_derivative;
-                
-                %nn_out{layer-1}.errors(:, target) =  nn_out{layer-1}.df(nn_out{layer-1}.activations(:,target)) * nn_out{layer}.backward_weights * nn_out{layer}.errors(:, target);
             end
         end
 
@@ -53,11 +45,7 @@ function nn_out = nn_backward_pass(nn, targets, rate)
             % size(nn_out{layer-1}.activations(:, target))
             
             delta_w = (rate / number_of_targets) * (nn_out{layer}.errors(:,target) .* nn_out{layer}.inputs(:,target)');
-            
-            %delta_w = rate *  .* nn_out{layer-1}.activations(:,target));
-            
-            %delta_w = (rate / number_of_targets) * projected_error;
-            
+
             nn_out{layer}.forward_weights += delta_w;
         end
         

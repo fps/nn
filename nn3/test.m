@@ -12,9 +12,13 @@ function nn = test()
 
     nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 10, 2));
 
-    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 10, 10));
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 10));
 
-    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 10, 10));
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
+
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
+
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
 
     %nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
 
@@ -24,17 +28,17 @@ function nn = test()
 
     %nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 7, 8));
 
-    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, 10));
+    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, 20));
 
     nn = nn_initialize_weights_gaussian(nn);
 
     % test data to learn
-    number_of_samples = 300;
+    number_of_samples = 100;
     x = [rand(1, number_of_samples) * 2 - 1; ones(1, number_of_samples)];
     y = 1 * sin(5 * x(1,:));
     
     % training
-    number_of_epochs = 500;
+    number_of_epochs = 5000;
     
     nn = nn_initialize_backward_weights_normal(nn);
     
@@ -44,7 +48,9 @@ function nn = test()
         
         % forward pass
         'forward pass'
+        tic
         nn = nn_forward_pass(nn, x(:,p));
+        toc
         nn_assert_consistency(nn);
         
         rmse = sqrt(sum((y(:,p) - nn{rows(nn)}.activations).^2) / number_of_samples)
@@ -53,12 +59,15 @@ function nn = test()
         
         % update backwards weights
         'update backwards weights'
-        % nn = nn_update_backward_weights_transpose(nn);
+        nn = nn_update_backward_weights_gaussian(nn, 0.001);
+        %nn = nn_update_backward_weights_transpose(nn);
         nn_assert_consistency(nn);
         
         % update weights 
         'backwards pass'
-        nn = nn_backward_pass(nn, y(:,p), 0.1);
+        tic
+        nn = nn_backward_pass(nn, y(:,p), 0.05);
+        toc
         nn_assert_consistency(nn);        
     end
 end
