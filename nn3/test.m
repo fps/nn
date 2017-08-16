@@ -20,6 +20,14 @@ function nn = test()
 
     nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
 
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
+
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
+
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
+
+    nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
+
     %nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
 
     %nn = nn_add_layer(nn, nn_create_layer(sigmoid, derivative_of_sigmoid, 20, 20));
@@ -30,7 +38,7 @@ function nn = test()
 
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, 20));
 
-    nn = nn_initialize_weights_gaussian(nn);
+    nn = nn_initialize_forward_weights_gaussian(nn);
 
     % test data to learn
     number_of_samples = 100;
@@ -40,7 +48,7 @@ function nn = test()
     % training
     number_of_epochs = 5000;
     
-    nn = nn_initialize_backward_weights_normal(nn);
+    nn = nn_initialize_backward_weights_gaussian(nn, 0.5);
     
     for epoch = 1:number_of_epochs
         epoch
@@ -59,14 +67,14 @@ function nn = test()
         
         % update backwards weights
         'update backwards weights'
-        nn = nn_update_backward_weights_gaussian(nn, 0.001);
+        %nn = nn_update_backward_weights_gaussian(nn, 0.001);
         %nn = nn_update_backward_weights_transpose(nn);
         nn_assert_consistency(nn);
         
         % update weights 
         'backwards pass'
         tic
-        nn = nn_backward_pass(nn, y(:,p), 0.05);
+        nn = nn_backward_pass(nn, y(:,p), 0.0001);
         toc
         nn_assert_consistency(nn);        
     end

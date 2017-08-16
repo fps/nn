@@ -18,7 +18,7 @@ function nn_out = nn_backward_pass(nn, targets, rate)
             nn_out{layer}.errors = (targets - nn_out{layer}.activations) .* nn_out{layer}.df(nn_out{layer}.sums);
         end
         
-        nn_assert_consistency(nn);
+        % nn_assert_consistency(nn);
 
         if layer > 1
             nn_out{layer-1}.errors = zeros(nn_out{layer-1}.number_of_neurons, columns(targets));
@@ -38,7 +38,7 @@ function nn_out = nn_backward_pass(nn, targets, rate)
             end
         end
 
-        nn_assert_consistency(nn);
+        % nn_assert_consistency(nn);
 
         % update weights
         for target = 1:columns(targets)
@@ -49,6 +49,6 @@ function nn_out = nn_backward_pass(nn, targets, rate)
             nn_out{layer}.forward_weights += delta_w;
         end
         
-        nn_assert_consistency(nn);
+        % nn_assert_consistency(nn);
     end
 end

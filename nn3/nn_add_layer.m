@@ -9,4 +9,6 @@ function nn_out = nn_add_layer(nn, layer)
     end
     
     nn_out{number_of_layers + 1,1} = layer;
+    
+    nn_assert_consistency(nn_out);
 end
