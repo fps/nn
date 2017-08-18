@@ -13,25 +13,27 @@ function nn = test()
     'create the neural net'
     nn = nn_new();
 
-    number_of_hidden_neurons = 100;
+    number_of_hidden_neurons = 10;
     
-    nn = nn_add_layer(nn, nn_create_layer(relu, drelu, number_of_hidden_neurons, 1));
-
-    for hidden_layer = 1:2
-        nn = nn_add_layer(nn, nn_create_layer(relu, drelu   , number_of_hidden_neurons, number_of_hidden_neurons));
+    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, number_of_hidden_neurons, 1));
+    
+    number_of_hidden_layers = 5;
+    
+    for hidden_layer = 1:number_of_hidden_layers
+        nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
 
-    nn = nn_initialize_forward_weights_gaussian(nn, 1);
+    nn = nn_initialize_forward_weights_gaussian(nn, 0.5);
 
     'test data to learn'
     number_of_samples = 100;
     x = rand(1, number_of_samples) * 2 - 1;
-    y = 1 * sin(5 * x);
+    y = 10 + 5 * x;
     
     'training'
-    number_of_epochs = 5000;
+    number_of_epochs = 50;
     
     %nn = nn_initialize_backward_weights_uniform(nn, 0.5);
     %nn = nn_initialize_backward_weights_gaussian(nn, 0.5);
@@ -51,7 +53,7 @@ function nn = test()
         
         rmse = sqrt(sum((y(:,p) - nn{rows(nn)}.activations).^2) / number_of_samples)
         
-        plot(x(:,p), nn{rows(nn)}.activations, '.', x(:,p), y(:,p), '*'); sleep(0.01); 
+        plot(x(:,p), nn{rows(nn)}.activations, '.', x(:,p), y(:,p), '+'); sleep(0.01); 
         
         % update backwards weights
         'update backwards weights'
@@ -62,7 +64,7 @@ function nn = test()
         % update weights 
         'backwards pass'
         tic
-        nn = nn_backward_pass(nn, y(:,p), 0.00001);
+        nn = nn_backward_pass(nn, y(:,p), 0.0001);
         toc
         nn_assert_consistency(nn);        
     end

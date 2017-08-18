@@ -26,15 +26,19 @@ function nn_out = nn_backward_pass(nn, targets, rate)
             % size(nn_out{layer-1}.errors)
             
             for target = 1:columns(targets)
-                previous_activations_derivative = nn_out{layer-1}.df(nn_out{layer-1}.sums(:,target));
+                previous_activations_derivative = [nn_out{layer-1}.df(nn_out{layer-1}.sums(:,target)); 1];
                 
                 current_backward_weights = nn_out{layer}.backward_weights;
                 
                 current_errors = nn_out{layer}.errors(:, target);
                 
-                % size(current_errors)
+                %size(current_errors)
+                %size(current_backward_weights)
+                %size(previous_activations_derivative)
                 
-                nn_out{layer-1}.errors(:, target) = (current_backward_weights * current_errors) .* previous_activations_derivative;
+                tmp_errors = (current_backward_weights * current_errors) .* previous_activations_derivative;
+                
+                nn_out{layer-1}.errors(:, target) = tmp_errors(1:end-1,:);
             end
         end
 

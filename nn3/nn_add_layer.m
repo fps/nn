@@ -5,7 +5,7 @@ function nn_out = nn_add_layer(nn, layer)
     number_of_layers = rows(nn);
     
     if number_of_layers > 0
-        assert(columns(getfield(layer, 'forward_weights')) == rows(getfield(nn_out{number_of_layers}, 'forward_weights')), "mismatching weight matrix dimensions")
+        assert(columns(getfield(layer, 'forward_weights')) == rows(getfield(nn_out{number_of_layers}, 'forward_weights')) + 1, "mismatching weight matrix dimensions")
     end
     
     nn_out{number_of_layers + 1,1} = layer;
