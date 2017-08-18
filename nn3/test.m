@@ -1,8 +1,8 @@
 
 function nn = test()
     % activation functions and their derivatives
-    sigmoid = @(x) tanh(x);
-    derivative_of_sigmoid = @(x) 1 - tanh(x).**2;
+    th = @(x) tanh(x);
+    dth = @(x) 1 - tanh(x).**2;
 
     identity = @(x) x;
     derivative_of_identity = @(x) ones(size(x));
@@ -15,10 +15,10 @@ function nn = test()
 
     number_of_hidden_neurons = 100;
     
-    nn = nn_add_layer(nn, nn_create_layer(relu, drelu, number_of_hidden_neurons, 1));
+    nn = nn_add_layer(nn, nn_create_layer(th, dth, number_of_hidden_neurons, 1));
 
     for hidden_layer = 1:2
-        nn = nn_add_layer(nn, nn_create_layer(relu, drelu   , number_of_hidden_neurons, number_of_hidden_neurons));
+        nn = nn_add_layer(nn, nn_create_layer(th, dth   , number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
