@@ -7,8 +7,8 @@ function nn = test()
     identity = @(x) x;
     derivative_of_identity = @(x) ones(size(x));
     
-    relu = @(x) max(-0.1, 0.9 * x);
-    drelu = @(x) (x > -0.1) - 0.1;
+    relu = @(x) max(0, x);
+    drelu = @(x) (x > 0);
     
     'create the neural net'
     nn = nn_new();
