@@ -37,7 +37,7 @@ function nn = test()
     
     %nn = nn_initialize_backward_weights_uniform(nn, 0.5);
     %nn = nn_initialize_backward_weights_gaussian(nn, 0.5);
-    nn = nn_normalize_backward_weights(nn, 2);
+    %nn = nn_normalize_backward_weights(nn, 2);
     
     for epoch = 1:number_of_epochs
         epoch
