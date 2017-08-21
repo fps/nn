@@ -18,12 +18,12 @@ function nn = test_tanh()
     nn = nn_add_layer(nn, nn_create_layer(th, dth, number_of_hidden_neurons, 1));
 
     for hidden_layer = 1:1
-        nn = nn_add_layer(nn, nn_create_layer(th, dth   , number_of_hidden_neurons, number_of_hidden_neurons));
+        nn = nn_add_layer(nn, nn_create_layer(th, dth, number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
 
-    nn = nn_initialize_forward_weights_gaussian(nn, 1/sqrt(number_of_hidden_neurons));
+    nn = nn_initialize_forward_weights_gaussian(nn, 1);
 
     'test data to learn'
     number_of_samples = 100;

@@ -1,5 +1,5 @@
 
-function nn = test()
+function nn = test_linear()
     % activation functions and their derivatives
     sigmoid = @(x) tanh(x);
     derivative_of_sigmoid = @(x) 1 - tanh(x).**2;
@@ -23,7 +23,7 @@ function nn = test()
     
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
 
-    nn = nn_initialize_forward_weights_gaussian(nn, 1/sqrt(number_of_hidden_neurons));
+    nn = nn_initialize_forward_weights_gaussian(nn, 1);
 
     'test data to learn'
     number_of_samples = 100;
