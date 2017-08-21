@@ -17,15 +17,13 @@ function nn = test()
     
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, number_of_hidden_neurons, 1));
     
-    number_of_hidden_layers = 5;
-    
-    for hidden_layer = 1:number_of_hidden_layers
+    for hidden_layer = 1:10
         nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
 
-    nn = nn_initialize_forward_weights_gaussian(nn, 0.5);
+    nn = nn_initialize_forward_weights_gaussian(nn, 1/sqrt(number_of_hidden_neurons));
 
     'test data to learn'
     number_of_samples = 100;
@@ -33,7 +31,7 @@ function nn = test()
     y = 10 + 5 * x;
     
     'training'
-    number_of_epochs = 50;
+    number_of_epochs = 200;
     
     %nn = nn_initialize_backward_weights_uniform(nn, 0.5);
     %nn = nn_initialize_backward_weights_gaussian(nn, 0.5);

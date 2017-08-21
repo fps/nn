@@ -13,17 +13,17 @@ function nn = test()
     'create the neural net'
     nn = nn_new();
 
-    number_of_hidden_neurons = 100;
+    number_of_hidden_neurons = 10;
     
     nn = nn_add_layer(nn, nn_create_layer(th, dth, number_of_hidden_neurons, 1));
 
-    for hidden_layer = 1:2
+    for hidden_layer = 1:1
         nn = nn_add_layer(nn, nn_create_layer(th, dth   , number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
 
-    nn = nn_initialize_forward_weights_gaussian(nn, 1);
+    nn = nn_initialize_forward_weights_gaussian(nn, 1/sqrt(number_of_hidden_neurons));
 
     'test data to learn'
     number_of_samples = 100;
@@ -35,7 +35,7 @@ function nn = test()
     
     %nn = nn_initialize_backward_weights_uniform(nn, 0.5);
     %nn = nn_initialize_backward_weights_gaussian(nn, 0.5);
-    nn = nn_normalize_backward_weights(nn, 2);
+    %nn = nn_normalize_backward_weights(nn, 2);
     
     for epoch = 1:number_of_epochs
         epoch
@@ -62,7 +62,7 @@ function nn = test()
         % update weights 
         'backwards pass'
         tic
-        nn = nn_backward_pass(nn, y(:,p), 0.00001);
+        nn = nn_backward_pass(nn, y(:,p), 0.1);
         toc
         nn_assert_consistency(nn);        
     end
