@@ -1,5 +1,5 @@
 
-function nn = test()
+function nn = test_tanh()
     % activation functions and their derivatives
     th = @(x) tanh(x);
     dth = @(x) 1 - tanh(x).**2;
