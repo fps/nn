@@ -15,13 +15,13 @@ function nn = test_linear()
 
     number_of_hidden_neurons = 10;
     
-    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, number_of_hidden_neurons, 1));
+    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, 1));
     
-    for hidden_layer = 1:10
+    for hidden_layer = 1:0
         nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
-    nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
+    %nn = nn_add_layer(nn, nn_create_layer(identity, derivative_of_identity, 1, number_of_hidden_neurons));
 
     nn = nn_initialize_forward_weights_gaussian(nn, 1);
 
@@ -62,7 +62,7 @@ function nn = test_linear()
         % update weights 
         'backwards pass'
         tic
-        nn = nn_backward_pass(nn, y(:,p), 0.001);
+        nn = nn_backward_pass(nn, y(:,p), 0.05);
         toc
         nn_assert_consistency(nn);        
     end
