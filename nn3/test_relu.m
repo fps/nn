@@ -9,20 +9,23 @@ function [nn rmses] = test_relu()
     
     relu = @(x) max(0, x);
     drelu = @(x) (x > 0);
-    %drelu = @(x) (x > 0) + 0.01 * randn(1,1);
+    %drelu = @(x) (x > 0) + 0.1 * randn(1,1);
     
     mrelu = @(x) max((0.1 * x), x);
     dmrelu = @(x) 0.1 * randn(1,1) + 0.2 + (x > 0) * 0.9;
     
+    f = relu;
+    df = drelu;
+    
     'create the neural net'
     nn = nn_new();
 
-    number_of_hidden_neurons = 10;
+    number_of_hidden_neurons = 50;
     
-    nn = nn_add_layer(nn, nn_create_layer(relu, drelu, number_of_hidden_neurons, 1));
+    nn = nn_add_layer(nn, nn_create_layer(f, df, number_of_hidden_neurons, 1));
 
-    for hidden_layer = 1:10
-        nn = nn_add_layer(nn, nn_create_layer(relu, drelu   , number_of_hidden_neurons, number_of_hidden_neurons));
+    for hidden_layer = 1:5
+        nn = nn_add_layer(nn, nn_create_layer(f, df   , number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(id, did, 1, number_of_hidden_neurons));
@@ -34,7 +37,7 @@ function [nn rmses] = test_relu()
     x = rand(1, number_of_samples) * 2 - 1;
     y = 1 * sin(5 * x);
     
-    minibatch_size = 20;
+    minibatch_size = 40;
     
     'training'
     number_of_epochs = 1000;
@@ -73,11 +76,18 @@ function [nn rmses] = test_relu()
         % update weights 
         'backwards pass'
         tic
-        nn = nn_backward_pass(nn, y(:,p), 0.001);
+        nn = nn_backward_pass(nn, y(:,p));
         toc
+        
         nn_assert_consistency(nn);        
         
+        tic
+        nn = nn_sgd(nn, 0.02);
+        toc
+        
+        nn_assert_consistency(nn);
+        
         %nn_count_saturated_relus(nn);
-        %nn = nn_reinitialize_saturated_relus(nn, 0.01);
+        nn = nn_reinitialize_saturated_relus(nn, 0.00001);
     end
 end

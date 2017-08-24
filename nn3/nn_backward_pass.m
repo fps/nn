@@ -1,5 +1,6 @@
- 
-function nn_out = nn_backward_pass(nn, targets, rate)
+
+% calculates gradient averaged over all targets
+function nn_out = nn_backward_pass(nn, targets)
     nn_out = nn;
     number_of_layers = rows(nn);
     number_of_targets = columns(targets);
@@ -48,10 +49,8 @@ function nn_out = nn_backward_pass(nn, targets, rate)
         for target = 1:columns(targets)
             % size(nn_out{layer-1}.activations(:, target))
             
-            delta_w = (rate / number_of_targets) * (nn_out{layer}.errors(:,target) .* nn_out{layer}.inputs(:,target)');
-
-            nn_out{layer}.forward_weights += delta_w;
-        end
+            nn_out{layer}.gradients = -(1 / number_of_targets) * (nn_out{layer}.errors(:,target) .* nn_out{layer}.inputs(:,target)');
+         end
         
         % nn_assert_consistency(nn);
     end

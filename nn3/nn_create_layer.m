@@ -11,6 +11,8 @@ function layer = nn_create_layer(activation_function, derivative_of_activation_f
     
     layer.forward_weights = zeros(number_of_neurons, number_of_neurons_in_previous_layer + 1);
     
+    layer.gradients = zeros(size(layer.forward_weights));
+    
     layer.backward_weights = layer.forward_weights';
     
     layer.inputs = zeros(number_of_neurons_in_previous_layer + 1, 1);
