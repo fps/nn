@@ -4,8 +4,8 @@ function [nn rmses] = test_relu()
     th = @(x) tanh(x);
     dth = @(x) 1 - tanh(x).**2;
 
-    lth = @(x) tanh(x) + 0.1 * x;
-    dlth = @(x) 1 - tanh(x).**2 + 0.1;
+    lth = @(x) tanh(x) + 0.5 * x;
+    dlth = @(x) 1 - tanh(x).**2 + 0.5;
     
     id = @(x) x;
     did = @(x) ones(size(x));
@@ -30,13 +30,13 @@ function [nn rmses] = test_relu()
     
     nn = nn_add_layer(nn, nn_create_layer(f, df, number_of_hidden_neurons, 1));
 
-    for hidden_layer = 1:20
+    for hidden_layer = 1:10
         nn = nn_add_layer(nn, nn_create_layer(f, df   , number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(id, did, 1, number_of_hidden_neurons));
 
-    nn = nn_initialize_forward_weights_gaussian(nn, 2);
+    nn = nn_initialize_forward_weights_gaussian(nn, 1);
 
     'test data to learn'
     number_of_samples = 1000;
