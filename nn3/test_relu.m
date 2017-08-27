@@ -30,7 +30,7 @@ function [nn rmses] = test_relu()
     
     nn = nn_add_layer(nn, nn_create_layer(f, df, number_of_hidden_neurons, 1));
 
-    for hidden_layer = 1:10
+    for hidden_layer = 1:50
         nn = nn_add_layer(nn, nn_create_layer(f, df   , number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
@@ -39,7 +39,7 @@ function [nn rmses] = test_relu()
     nn = nn_initialize_forward_weights_gaussian(nn, 1);
 
     'test data to learn'
-    number_of_samples = 1000;
+    number_of_samples = 10000;
     x = rand(1, number_of_samples) * 2 - 1;
     y = 1 * sin(5 * x);
     
@@ -88,7 +88,7 @@ function [nn rmses] = test_relu()
         nn_assert_consistency(nn);        
         
         tic
-        nn = nn_sgd(nn, 0.01);
+        nn = nn_sgd(nn, 0.001);
         toc
         
         nn_assert_consistency(nn);
