@@ -20,6 +20,9 @@ function [nn rmses] = test_relu()
     mrelu = @(x) max((0.1 * x), x);
     dmrelu = @(x) 0.1 * randn(1,1) + 0.2 + (x > 0) * 0.9;
     
+    cone = @(x) 1 + min(x,0) + min(-x,0);
+    dcone = @(x) x < 0 + -1 * (x > 0);
+    
     f = lth;
     df = dlth;
     
@@ -38,6 +41,8 @@ function [nn rmses] = test_relu()
 
     nn = nn_initialize_forward_weights_gaussian(nn, 1);
 
+    nn_assert_consistency(nn);
+    
     'test data to learn'
     number_of_samples = 10000;
     x = rand(1, number_of_samples) * 2 - 1;
@@ -65,9 +70,11 @@ function [nn rmses] = test_relu()
         nn = nn_forward_pass(nn, x(:,p));
         toc
         
+        %nn = nn_dropout(nn);
+        
         nn_assert_consistency(nn);
         
-        rmse = sqrt(sum((y(:,p) - nn{rows(nn)}.activations).^2) / number_of_samples)
+        rmse = sqrt(sum((y(:,p) - nn{rows(nn)}.activations).^2) / length(p))
         
         plot(x(:,p), nn{rows(nn)}.activations, '.', x(:,p), y(:,p), '+'); sleep(0.01); 
         
