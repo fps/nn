@@ -4,8 +4,8 @@ function [nn rmses] = test_relu()
     th = @(x) tanh(x);
     dth = @(x) 1 - tanh(x).**2;
 
-    lth = @(x) tanh(x) + 0.5 * x;
-    dlth = @(x) 1 - tanh(x).**2 + 0.5;
+    lth = @(x) tanh(x) + 0.1 * x;
+    dlth = @(x) 1 - tanh(x).**2 + 0.1;
     
     id = @(x) x;
     did = @(x) ones(size(x));
@@ -33,13 +33,13 @@ function [nn rmses] = test_relu()
     
     nn = nn_add_layer(nn, nn_create_layer(f, df, number_of_hidden_neurons, 1));
 
-    for hidden_layer = 1:50
+    for hidden_layer = 1:20
         nn = nn_add_layer(nn, nn_create_layer(f, df   , number_of_hidden_neurons, number_of_hidden_neurons));
     end
     
     nn = nn_add_layer(nn, nn_create_layer(id, did, 1, number_of_hidden_neurons));
 
-    nn = nn_initialize_forward_weights_gaussian(nn, 1);
+    nn = nn_initialize_forward_weights_gaussian(nn, 2);
 
     nn_assert_consistency(nn);
     
@@ -95,7 +95,7 @@ function [nn rmses] = test_relu()
         nn_assert_consistency(nn);        
         
         tic
-        nn = nn_sgd(nn, 0.001);
+        nn = nn_sgd(nn, 0.01);
         toc
         
         nn_assert_consistency(nn);
